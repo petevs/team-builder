@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import MemberForm from './MemberForm'
+import styled from 'styled-components'
 
 const TeamMembers = props => {
 
@@ -20,13 +21,35 @@ const TeamMembers = props => {
     }
 
     return (
-        <div>
+        <Container>
             <MemberForm addNewTeamMember={addNewTeamMember}/>
             {teamMembers.map((member) => (
-                <h3 key={member.id}>{member.name}</h3>
+                <MemberCard key={member.id}>
+                    <h2>{member.name}</h2>
+                    <h3>{member.email}</h3>
+                    <h3>{member.role}</h3>
+                </MemberCard>
             ))}
-        </div>
+        </Container>
     )
 }
+
+//Styled Components
+
+const Container = styled.div`
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+    justify-items: center;
+`
+
+const MemberCard = styled.div`
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    padding: 1rem;
+`
+
+
 
 export default TeamMembers
