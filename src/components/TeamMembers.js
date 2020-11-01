@@ -20,6 +20,14 @@ const TeamMembers = props => {
       setTeamMembers([newMember, ...teamMembers])
     }
 
+    //DELETE TEAM MEMBER
+    const deleteTeamMember = (id) => {
+        const newTeamMembers = [...teamMembers];
+        const indexOfTeamMember = newTeamMembers.findIndex((member) => member.id === id);
+        newTeamMembers.splice(indexOfTeamMember, 1);
+        setTeamMembers(newTeamMembers)
+    }
+
     return (
         <Container>
             <Headline>Our Team Members</Headline>
@@ -29,6 +37,8 @@ const TeamMembers = props => {
                     <MemberTitle>{member.name}</MemberTitle>
                     <MemberDetail>{member.email}</MemberDetail>
                     <MemberDetail>{member.role}</MemberDetail>
+                    <UpdateButton>Edit</UpdateButton>
+                    <UpdateButton onClick={() => deleteTeamMember(member.id)}>Delete</UpdateButton>
                 </MemberCard>
             ))}
             </Members>
@@ -65,6 +75,7 @@ const MemberCard = styled.div`
     border-radius: 6px;
     background: #fff;
     padding: 1rem;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
 `
 
 const MemberTitle = styled.h2`
@@ -74,6 +85,12 @@ const MemberTitle = styled.h2`
 const MemberDetail = styled.h3`
     font-size: 1.4rem;
     font-weight: 400;
+`
+
+const UpdateButton = styled.button`
+    padding: .25rem 1rem;;
+    margin: .5rem .25rem 0 .25rem;
+    border-radius: .25rem;
 `
 
 
