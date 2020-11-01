@@ -22,14 +22,17 @@ const TeamMembers = props => {
 
     return (
         <Container>
-            <MemberForm addNewTeamMember={addNewTeamMember}/>
+            <Headline>Our Team Members</Headline>
+            <Members>
             {teamMembers.map((member) => (
                 <MemberCard key={member.id}>
-                    <h2>{member.name}</h2>
-                    <h3>{member.email}</h3>
-                    <h3>{member.role}</h3>
+                    <MemberTitle>{member.name}</MemberTitle>
+                    <MemberDetail>{member.email}</MemberDetail>
+                    <MemberDetail>{member.role}</MemberDetail>
                 </MemberCard>
             ))}
+            </Members>
+            <MemberForm addNewTeamMember={addNewTeamMember}/>
         </Container>
     )
 }
@@ -43,11 +46,34 @@ const Container = styled.div`
     justify-items: center;
 `
 
+const Headline = styled.h1`
+    font-size: 3.5rem;
+    padding-top: 2rem;
+    color: #fff;
+`
+
+const Members = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+`
+
 const MemberCard = styled.div`
+    min-width: 300px;
     border: 1px solid #ccc;
     border-radius: 6px;
     background: #fff;
     padding: 1rem;
+`
+
+const MemberTitle = styled.h2`
+    font-size: 2.4rem;
+`
+
+const MemberDetail = styled.h3`
+    font-size: 1.4rem;
+    font-weight: 400;
 `
 
 
