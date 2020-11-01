@@ -5,9 +5,7 @@ import styled from 'styled-components'
 const TeamMembers = props => {
 
     const [teamMembers, setTeamMembers] = useState([])
-
-    console.log(teamMembers)
-
+    const [memberToEdit, setMemberToEdit] = useState()
 
     const addNewTeamMember = (member) => {
       const newMember = {
@@ -28,6 +26,12 @@ const TeamMembers = props => {
         setTeamMembers(newTeamMembers)
     }
 
+    //EDIT TEAM MEMBER
+
+    const editTeamMember = (member) => {
+        setMemberToEdit(member)
+    }
+
     return (
         <Container>
             <Headline>Our Team Members</Headline>
@@ -37,12 +41,12 @@ const TeamMembers = props => {
                     <MemberTitle>{member.name}</MemberTitle>
                     <MemberDetail>{member.email}</MemberDetail>
                     <MemberDetail>{member.role}</MemberDetail>
-                    <UpdateButton>Edit</UpdateButton>
+                    <UpdateButton onClick={() =>editTeamMember(member)}>Edit</UpdateButton>
                     <UpdateButton onClick={() => deleteTeamMember(member.id)}>Delete</UpdateButton>
                 </MemberCard>
             ))}
             </Members>
-            <MemberForm addNewTeamMember={addNewTeamMember}/>
+            <MemberForm addNewTeamMember={addNewTeamMember} memberToEdit={memberToEdit} setMemberToEdit={setMemberToEdit} deleteTeamMember={deleteTeamMember}/>
         </Container>
     )
 }
@@ -92,7 +96,5 @@ const UpdateButton = styled.button`
     margin: .5rem .25rem 0 .25rem;
     border-radius: .25rem;
 `
-
-
 
 export default TeamMembers

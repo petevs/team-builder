@@ -1,28 +1,49 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 const MemberForm = props => {
     
-    const { addNewTeamMember } = props
+    const { addNewTeamMember, memberToEdit, setMemberToEdit, deleteTeamMember} = props
     const [teamMember, setTeamMember] = useState({
         name: "",
         email: "",
         role: "",
       })
 
+      const [isEditing, setIsEditing] = useState(false)
+
+// When memberToEdit changes autopopulate form by setTeamMember to memberToEdit   
+useEffect(() => {
+    if(memberToEdit === undefined || memberToEdit.name === ''){
+        return
+    } else{
+        setTeamMember({name: memberToEdit.name, email: memberToEdit.email, role: memberToEdit.role})
+        setIsEditing(true)
+        console.log(memberToEdit)
+    }
+},[memberToEdit])
+
     const handleChanges = (event) => {
         setTeamMember({...teamMember, [event.target.name]: event.target.value})
     }
 
+    //Submitting Form
     const submitForm = (event) => {
         event.preventDefault();
-        addNewTeamMember(teamMember);
+        if(isEditing){
+            deleteTeamMember(memberToEdit.id)
+        } else{
+            addNewTeamMember(teamMember)
+        }
+        //Set back states back to empty
         setTeamMember({ name: "", email: "", role: ""})
+        setMemberToEdit({ name: "", email: "", role: ""})
+        setIsEditing(false)
     }
 
     return (
         <Form onSubmit={submitForm}>
-            <FormTitle>Add New Team Member</FormTitle>
+            <FormTitle>{isEditing ? 'Edit Team Member' : 'Add New Team Member'}</FormTitle>
             <Label htmlFor='name'>Name</Label>
             <Input
                 id='name'
@@ -55,7 +76,9 @@ const MemberForm = props => {
                 onChange={handleChanges}
                 required
                 /> <br />
-            <Button type='submit'>Add Member</Button>
+                {isEditing
+                 ? <Button type='submit'>Update Member</Button> 
+                 : <Button type='submit'>Add Member</Button>}
         </Form>
     )
 }
