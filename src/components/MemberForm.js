@@ -3,8 +3,9 @@ import styled from 'styled-components'
 
 const MemberForm = props => {
     
-    const { addNewTeamMember, memberToEdit, setMemberToEdit, deleteTeamMember} = props
+    const { addNewTeamMember, memberToEdit, setMemberToEdit, updateTeamMember} = props
     const [teamMember, setTeamMember] = useState({
+        id: 0,
         name: "",
         email: "",
         role: "",
@@ -17,9 +18,8 @@ useEffect(() => {
     if(memberToEdit === undefined || memberToEdit.name === ''){
         return
     } else{
-        setTeamMember({name: memberToEdit.name, email: memberToEdit.email, role: memberToEdit.role})
+        setTeamMember({id: memberToEdit.id, name: memberToEdit.name, email: memberToEdit.email, role: memberToEdit.role})
         setIsEditing(true)
-        console.log(memberToEdit)
     }
 },[memberToEdit])
 
@@ -31,7 +31,7 @@ useEffect(() => {
     const submitForm = (event) => {
         event.preventDefault();
         if(isEditing){
-            deleteTeamMember(memberToEdit.id)
+            updateTeamMember(teamMember)
         } else{
             addNewTeamMember(teamMember)
         }

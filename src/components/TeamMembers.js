@@ -32,6 +32,14 @@ const TeamMembers = props => {
         setMemberToEdit(member)
     }
 
+    const updateTeamMember = (updatedMember) => {
+        const updatedTeamMembers = [...teamMembers];
+        const indexOfTeamMember = updatedTeamMembers.findIndex((member) => member.id === updatedMember.id)
+        updatedTeamMembers.splice(indexOfTeamMember, 1, updatedMember)
+        setTeamMembers(updatedTeamMembers)
+        }
+
+
     return (
         <Container>
             <Headline>Our Team Members</Headline>
@@ -46,7 +54,7 @@ const TeamMembers = props => {
                 </MemberCard>
             ))}
             </Members>
-            <MemberForm addNewTeamMember={addNewTeamMember} memberToEdit={memberToEdit} setMemberToEdit={setMemberToEdit} deleteTeamMember={deleteTeamMember}/>
+            <MemberForm addNewTeamMember={addNewTeamMember} memberToEdit={memberToEdit} setMemberToEdit={setMemberToEdit} updateTeamMember={updateTeamMember}/>
         </Container>
     )
 }
